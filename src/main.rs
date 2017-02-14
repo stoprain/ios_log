@@ -1,36 +1,56 @@
+#![allow(non_camel_case_types,dead_code)]
 extern crate core_foundation_sys;
 extern crate core_foundation;
+
+extern crate libc;
+use libc::*;
 
 use core_foundation::string::CFString;
 use core_foundation_sys::string::CFStringRef;
 use core_foundation::base::TCFType;
+use std::{fs, mem, path, ptr, process, sync, thread};
 
 #[repr(C)]
-struct am_device {
-    unknown0: [char; 16],
-    device_id: u32,
-    product_id: u32,
-    serial: *mut u32,
-    unknown1: u32,
-    unknown2: [char; 4],
-    lockdown_conn: u32,
-    unknown3: [char; 8],
+#[derive(Copy, Clone, Debug)]
+pub struct am_device {
+    unknown0: [c_char; 16],
+    device_id: c_int,
+    product_id: c_int,
+    serial: *const c_char,
+    unknown1: c_int,
+    unknown2: [c_char; 4],
+    lockdown_conn: c_int,
+    unknown3: [c_char; 8],
 }
 
-struct am_device_notification_callback_info {
-    dev: *mut am_device,
-    msg: u32,
+unsafe impl Send for am_device {}
+
+pub const ADNCI_MSG_CONNECTED: c_uint = 1;
+pub const ADNCI_MSG_DISCONNECTED: c_uint = 2;
+pub const ADNCI_MSG_UNSUBSCRIBED: c_uint = 3;
+
+#[repr(C)]
+#[derive(Copy, Clone, Debug)]
+pub struct am_device_notification_callback_info {
+    pub dev: *mut am_device,
+    pub msg: ::std::os::raw::c_uint,
+    pub subscription: *mut am_device_notification,
 }
 
-struct am_device_notification {
-    unknown0: u32,
-    unknown1: u32,
-    unknown2: u32,
-    callback: u32,
-    unknown3: u32,
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct am_device_notification {
+    unknown0: c_int,
+    unknown1: c_int,
+    unknown2: c_int,
+    callback: *const am_device_notification_callback,
+    unknown3: c_int,
 }
 
-extern "C" fn DeviceNotificationCallback(info: *mut am_device_notification_callback_info) {
+pub type am_device_notification_callback = extern "C" fn(*mut am_device_notification_callback_info,
+                                                         *mut c_void);
+
+extern "C" fn DeviceNotificationCallback(info: *mut am_device_notification_callback_info, devices: *mut c_void) {
     // println!("DeviceNotificationCallback {}", unsafe { (*info).msg });
 
     let msg = unsafe { (*info).msg };
@@ -38,21 +58,22 @@ extern "C" fn DeviceNotificationCallback(info: *mut am_device_notification_callb
     if msg == 1 {
         let mut device = unsafe { (*info).dev };
         if unsafe { AMDeviceConnect(device) } == 0 {
-            let a = unsafe { AMDeviceIsPaired(device) };
-            let b = unsafe { AMDeviceValidatePairing(device) };
-            if a == 1 && b == 0 {
-                if unsafe { AMDeviceStartSession(device) } == 0 {
-                    let a1 = 0;
-                    let r1 = a1 as *mut u32;
-                    let a2 = 0;
-                    let r2 = a2 as *mut u32;
-                    let s = unsafe { CFString::new("com.apple.syslog_relay").as_concrete_TypeRef() };
-                    let service = unsafe { AMDeviceStartService(device, s, r1, r2) };
+            let paired = unsafe { AMDeviceIsPaired(device) };
+            let validate = unsafe { AMDeviceValidatePairing(device) };
+            if paired == 1 && validate == 0 {
+                let session = unsafe { AMDeviceStartSession(device) };
+                println!("AMDeviceStartSession {}", session);
+                if session == 0 {
+                    let mut fd: c_int = 0;
+                    let service = unsafe { AMDeviceStartService(device, 
+                        CFString::from_static_string("com.apple.syslog_relay").as_concrete_TypeRef(), 
+                        &mut fd, std::ptr::null()) };
                     println!("AMDeviceStartService {}", service);
                 }
             }
         }
     }
+    println!("DeviceNotificationCallback");
 
 }
 
@@ -68,20 +89,27 @@ extern "C" fn DeviceNotificationCallback(info: *mut am_device_notification_callb
 
 // }
 
-extern {
+extern "C" {
     // fn double_input(input: libc::c_int) -> libc::c_int;
     // fn connect();
     // fn register_callback(cb: extern fn(i32)) -> i32;
     // fn trigger_callback();
     fn CFRunLoopRun();
-    fn AMDeviceNotificationSubscribe(callback: extern fn(info: *mut am_device_notification_callback_info), 
-        unused0: u32, unused1: u32, dn_unknown3: u32, 
-        notification: am_device_notification) -> i32;
-    fn AMDeviceConnect(device: *mut am_device) -> i32;
-    fn AMDeviceStartService(device: *mut am_device, service_name: CFStringRef, handle: *mut u32, unknown: *mut u32) -> i32;
-    fn AMDeviceStartSession(device: *mut am_device) -> i32;
-    fn AMDeviceIsPaired(device: *mut am_device) -> i32;
-    fn AMDeviceValidatePairing(device: *mut am_device) -> i32;
+    pub fn AMDeviceNotificationSubscribe(callback: am_device_notification_callback,
+                                         unused0: c_uint,
+                                         unused1: c_uint,
+                                         dn_unknown3: c_uint,
+                                         notification: *mut *const am_device_notification)
+                                         -> c_int;
+    pub fn AMDeviceConnect(device: *const am_device) -> c_int;
+    pub fn AMDeviceIsPaired(device: *const am_device) -> c_int;
+    pub fn AMDeviceValidatePairing(device: *const am_device) -> c_int;
+    pub fn AMDeviceStartSession(device: *const am_device) -> c_int;
+    pub fn AMDeviceStartService(device: *const am_device,
+                                service_name: CFStringRef,
+                                socket_fd: *mut c_int,
+                                unknown: *const c_int)
+                                -> c_int;
 }
 
 fn main() {
@@ -95,8 +123,9 @@ fn main() {
     // }
     unsafe {
         //AMDeviceNotificationSubscribe();
-        let a = am_device_notification { unknown0: 0, unknown1: 0, unknown2: 0, callback: 0, unknown3: 0 };
-        AMDeviceNotificationSubscribe(DeviceNotificationCallback, 0, 0, 0, a);
+        let notify: *const am_device_notification = std::ptr::null();
+        AMDeviceNotificationSubscribe(DeviceNotificationCallback, 0, 0, 0, 
+            &mut notify.into());
         CFRunLoopRun();
     }
 
