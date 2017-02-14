@@ -7,6 +7,8 @@ links = "src/MobileDevice"
 
 [dependencies]
 libc = "0.2.0"
+core-foundation = "0.3.0"
+core-foundation-sys = "0.3.1"
 
 [build-dependencies]
 gcc = "0.3.43"
