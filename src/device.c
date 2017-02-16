@@ -3,6 +3,9 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include "MobileDevice.h"
 
+typedef void (*rust_callback)(const char *);
+rust_callback cb;
+
 typedef struct {
     service_conn_t connection;
     CFSocketRef socket;
@@ -183,6 +186,7 @@ static void SocketCallback(CFSocketRef s, CFSocketCallBackType type, CFDataRef a
         }
         
         if (should_print_message(buffer, extentLength)) {
+            cb(buffer);
             printMessage(1, buffer, extentLength);
             printSeparator(1);
         }
@@ -279,9 +283,9 @@ static void color_separator(int fd)
     write_const(fd, COLOR_DARK_WHITE "--" COLOR_RESET "\n");
 }
 
-int connect ()
+int connect (rust_callback callback)
 {
-    printf("connected");
+    cb = callback;
     liveConnections = CFDictionaryCreateMutable(kCFAllocatorDefault, 0, NULL, NULL);
     am_device_notification *notification;
     AMDeviceNotificationSubscribe(DeviceNotificationCallback, 0, 0, NULL, &notification);
