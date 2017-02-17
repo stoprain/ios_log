@@ -186,9 +186,12 @@ static void SocketCallback(CFSocketRef s, CFSocketCallBackType type, CFDataRef a
         }
         
         if (should_print_message(buffer, extentLength)) {
-            cb(buffer);
-            printMessage(1, buffer, extentLength);
-            printSeparator(1);
+            //cb(buffer);
+            pthread_t my_thread;
+            pthread_create(&my_thread, NULL, cb, buffer); // no parentheses here 
+            pthread_join(my_thread, NULL);
+            // printMessage(1, buffer, extentLength);
+            // printSeparator(1);
         }
         
         length -= extentLength;
@@ -289,6 +292,7 @@ int connect (rust_callback callback)
     liveConnections = CFDictionaryCreateMutable(kCFAllocatorDefault, 0, NULL, NULL);
     am_device_notification *notification;
     AMDeviceNotificationSubscribe(DeviceNotificationCallback, 0, 0, NULL, &notification);
-    CFRunLoopRun();
-    return 0;
+    // CFRunLoopRun();
+    // cb("connect done");
+    // return 0;
 }
