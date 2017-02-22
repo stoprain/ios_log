@@ -1,0 +1,6 @@
+use_frameworks!
+
+target 'ios_log' do
+    pod 'SnapKit'
+    pod 'YNLib', :git => 'https://github.com/stoprain/YNLib.git', :tag => '3.0.2'
+end

@@ -1,2 +1,5 @@
 Cargo.lock
 target
+Pods
+Podfile.lock
+src/ios_log/ios_log.xcworkspace
