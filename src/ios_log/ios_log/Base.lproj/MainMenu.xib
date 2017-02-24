@@ -16,6 +16,7 @@
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="ios_log" customModuleProvider="target">
             <connections>
                 <outlet property="sourceListView" destination="Wew-MX-yoO" id="NRn-hs-r6F"/>
+                <outlet property="textField" destination="gHF-H7-khd" id="wIt-4W-ECw"/>
                 <outlet property="textView" destination="yuc-FK-eh5" id="rWX-Xd-Uab"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="gIp-Ho-8D9"/>
             </connections>
@@ -788,7 +789,7 @@
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <size key="minSize" width="451" height="436"/>
-                                    <size key="maxSize" width="463" height="10000000"/>
+                                    <size key="maxSize" width="466" height="10000000"/>
                                     <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                 </textView>
                             </subviews>
@@ -804,9 +805,9 @@
                         </scroller>
                     </scrollView>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" allowsCharacterPickerTouchBarItem="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hlU-oM-fRk">
-                        <rect key="frame" x="291" y="450" width="42" height="17"/>
+                        <rect key="frame" x="291" y="450" width="35" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Regex" id="Abx-gy-4tP">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Filter" id="Abx-gy-4tP">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

@@ -10,6 +10,23 @@ import Cocoa
 import SnapKit
 import YNLib
 
+let documentPath = AppSandboxHelper.documentsPath + "/ios_log"
+
+extension String {
+    var ns: NSString {
+        return self as NSString
+    }
+    func stringByAppendingPathComponent(path: String) -> String {
+        return ns.appendingPathComponent(path)
+    }
+    var pathExtension: String? {
+        return ns.pathExtension
+    }
+    var lastPathComponent: String? {
+        return ns.lastPathComponent
+    }
+}
+
 class Device: NSObject {
     var name: String = ""
     var nodes: [Node] = [Node]()
@@ -21,19 +38,63 @@ class Node: NSObject {
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate,
-    NSOutlineViewDataSource, NSOutlineViewDelegate {
+    NSOutlineViewDataSource, NSOutlineViewDelegate,
+    NSTextFieldDelegate {
 
     @IBOutlet weak var window: NSWindow!
     @IBOutlet weak var sourceListView: NSOutlineView?
     @IBOutlet weak var textView: NSTextView?
+    @IBOutlet weak var textField: NSTextField?
     
     var ios = Device()
     var mac = Device()
+    var logs = [String]()
+    var origin = ""
 
 //    static var t: NSTextView!
     
+    func doFilter() {
+        self.textView?.string = ""
+        let s = self.textField?.stringValue.lowercased() ?? ""
+        if s.characters.count == 0 {
+            self.textView?.string = self.origin
+            return
+        }
+        self.textView?.textStorage?.beginEditing()
+        for l in self.logs {
+            if let r = l.lowercased().range(of: s) {
+                let a = NSMutableAttributedString(string: l + "\n")
+                let start = l.distance(from: l.startIndex, to: r.lowerBound)
+                let end = l.distance(from: l.startIndex, to: r.upperBound) - start
+                a.addAttributes([NSForegroundColorAttributeName: NSColor.orange], range: NSMakeRange(start, end))
+                self.textView?.textStorage?.append(a)
+            }
+        }
+        self.textView?.textStorage?.endEditing()
+    }
+    
+    func filterLogs(s: String) {
+        Chrono.start(0)
+        self.origin = s
+        self.logs = s.components(separatedBy: "\n")
+        Chrono.stop(0) { (time) in
+            print("components separatedBy spent \(time)")
+        }
+        Chrono.start(0)
+        self.textView?.textStorage?.beginEditing()
+        self.textView?.string = ""
+        for l in self.logs {
+            let a = NSAttributedString(string: l + "\n")
+            self.textView?.textStorage?.append(a)
+        }
+        self.textView?.textStorage?.endEditing()
+        Chrono.stop(0) { (time) in
+            print("textStorage spent \(time)")
+        }
+    }
+    
     func checkDocumentPath() {
-        let dpath = AppSandboxHelper.documentsPath + "/ios_log"
+        let dpath = documentPath
         let f = FileManager.default
         if !f.fileExists(atPath: dpath) {
             do {
@@ -46,7 +107,7 @@ class AppDelegate: NSObject, NSApplicationDelegate,
     
     func reloadLogs() {
         self.mac.nodes.removeAll()
-        let dpath = AppSandboxHelper.documentsPath + "/ios_log"
+        let dpath = documentPath
         let f = FileManager.default
         let e = f.enumerator(atPath: dpath)
         while let element = e?.nextObject() as? String {
@@ -75,6 +136,8 @@ class AppDelegate: NSObject, NSApplicationDelegate,
         self.sourceListView?.delegate = self
         
         textView?.isEditable = false
+        self.textField?.delegate = self
+        self.textView?.lnv_setUpLineNumberView()
         
         self.reloadLogs()
         
@@ -187,14 +250,20 @@ class AppDelegate: NSObject, NSApplicationDelegate,
     func outlineViewSelectionDidChange(_ notification: Notification) {
         print(notification)
         if let n = self.sourceListView?.item(atRow: self.sourceListView!.selectedRow) as? Node {
-            let dpath = AppSandboxHelper.documentsPath + "/ios_log" + "/" + n.name
+            let dpath = documentPath.stringByAppendingPathComponent(path: n.name)
             do {
                 let t = try String(contentsOfFile: dpath)
-                self.textView?.string = t
+                self.filterLogs(s: t)
             } catch {
                 
             }
         }
+    }
+    
+    // NSTextFieldDelegate
+    
+    override func controlTextDidChange(_ obj: Notification) {
+        self.doFilter()
     }
 
 }

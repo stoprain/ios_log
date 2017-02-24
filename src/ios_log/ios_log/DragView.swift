@@ -28,18 +28,19 @@ class DragView: NSScrollView {
                 _ = components.dropLast(1).map(String.init).joined(separator: "/")
                 let words = components.count-1
                 let tail = components.dropFirst(words).map(String.init)[0]
-                
-                let dpath = AppSandboxHelper.documentsPath + "/ios_log" + "/" + tail
-                let f = FileManager.default
-                do {
-                    if f.fileExists(atPath: dpath) {
-                        try f.removeItem(atPath: dpath)
+                if tail.pathExtension == "log" || tail.pathExtension == "xlog" {
+                    let dpath = documentPath.stringByAppendingPathComponent(path: tail)
+                    let f = FileManager.default
+                    do {
+                        if f.fileExists(atPath: dpath) {
+                            try f.removeItem(atPath: dpath)
+                        }
+                        
+                        try f.copyItem(atPath: path, toPath: dpath)
+                        self.runPythonScript(path: dpath)
+                    } catch {
+                        
                     }
-                    
-                    try f.copyItem(atPath: path, toPath: dpath)
-                    self.runPythonScript(path: dpath)
-                } catch {
-                    
                 }
             }
         }
@@ -51,20 +52,22 @@ class DragView: NSScrollView {
     }
     
     private func runPythonScript(path: String) {
-        let process = Process()
-        process.launchPath = "/usr/bin/python"
-        let scriptPath = Bundle.main.path(forResource: "decode_mars_log_file", ofType: "py")
-        process.arguments = [scriptPath!, path]
-        
-        process.standardInput = Pipe()
-        process.standardOutput = Pipe()
-        process.standardError = Pipe()
-        
-        process.launch()
-        process.waitUntilExit()
-        let exitCode = process.terminationStatus
-        if exitCode != 0 {
-            Swift.print("process Error!")
+        if path.pathExtension == "xlog" {
+            let process = Process()
+            process.launchPath = "/usr/bin/python"
+            let scriptPath = Bundle.main.path(forResource: "decode_mars_log_file", ofType: "py")
+            process.arguments = [scriptPath!, path]
+            
+            process.standardInput = Pipe()
+            process.standardOutput = Pipe()
+            process.standardError = Pipe()
+            
+            process.launch()
+            process.waitUntilExit()
+            let exitCode = process.terminationStatus
+            if exitCode != 0 {
+                Swift.print("process Error!")
+            }
         }
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		28193FB72EE65A8891586119 /* Pods_ios_log.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3DDEB29F23BB148A527922AD /* Pods_ios_log.framework */; };
 		B46FE1611E5D95C900DB341F /* decode_mars_log_file.py in Resources */ = {isa = PBXBuildFile; fileRef = B46FE1601E5D95C900DB341F /* decode_mars_log_file.py */; };
+		B49049BE1E601DC100E7BE01 /* LineNumberRulerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49049BD1E601DC100E7BE01 /* LineNumberRulerView.swift */; };
 		B49EE9181E5AF50A00E357EF /* DragView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49EE9171E5AF50A00E357EF /* DragView.swift */; };
 		B4A737971E56FA960079FA93 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A737961E56FA960079FA93 /* AppDelegate.swift */; };
 		B4A737991E56FA960079FA93 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4A737981E56FA960079FA93 /* Assets.xcassets */; };
@@ -22,6 +23,7 @@
 		44B9F1816DB538157D6187F0 /* Pods-ios_log.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios_log.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios_log/Pods-ios_log.debug.xcconfig"; sourceTree = "<group>"; };
 		73CD5E6B4CD97554A4345CBA /* Pods-ios_log.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios_log.release.xcconfig"; path = "Pods/Target Support Files/Pods-ios_log/Pods-ios_log.release.xcconfig"; sourceTree = "<group>"; };
 		B46FE1601E5D95C900DB341F /* decode_mars_log_file.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = decode_mars_log_file.py; sourceTree = "<group>"; };
+		B49049BD1E601DC100E7BE01 /* LineNumberRulerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LineNumberRulerView.swift; sourceTree = "<group>"; };
 		B49EE9171E5AF50A00E357EF /* DragView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DragView.swift; sourceTree = "<group>"; };
 		B4A737931E56FA960079FA93 /* ios_log.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ios_log.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4A737961E56FA960079FA93 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 		B4A737951E56FA960079FA93 /* ios_log */ = {
 			isa = PBXGroup;
 			children = (
+				B49049BD1E601DC100E7BE01 /* LineNumberRulerView.swift */,
 				B46FE1601E5D95C900DB341F /* decode_mars_log_file.py */,
 				B4A737A41E56FBF40079FA93 /* main.c */,
 				B4A737A51E56FBF40079FA93 /* MobileDevice.framework */,
@@ -226,6 +229,7 @@
 			files = (
 				B4A737A71E56FBF40079FA93 /* main.c in Sources */,
 				B4A737971E56FA960079FA93 /* AppDelegate.swift in Sources */,
+				B49049BE1E601DC100E7BE01 /* LineNumberRulerView.swift in Sources */,
 				B49EE9181E5AF50A00E357EF /* DragView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
