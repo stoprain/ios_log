@@ -199,30 +199,22 @@ class AppDelegate: NSObject, NSApplicationDelegate,
                                     let end = b.distance(from: b.startIndex, to: r.upperBound) - start
                                     aa.addAttributes([NSForegroundColorAttributeName: NSColor.orange], range: NSMakeRange(start, end))
                                     
-//                                    let scroll = (NSMaxY(d.textView!.visibleRect) == NSMaxY(d.textView!.bounds))
+                                    let scroll = (NSMaxY(d.textView!.visibleRect) == NSMaxY(d.textView!.bounds))
                                     d.textView?.textStorage?.append(aa)
-//                                    if scroll {
-//                                        d.textView?.scrollRangeToVisible(NSMakeRange(d.textView!.string!.characters.count, 0))
-//                                    }
-                                    
-                                    
-                                    
-//                                    NSString *messageWithNewLine = [message stringByAppendingString:@"\n"];
-//                                    
-//                                    // Smart Scrolling
-//                                    BOOL scroll = (NSMaxY(self.textView.visibleRect) == NSMaxY(self.textView.bounds));
-//                                    
-//                                    // Append string to textview
-//                                    [self.textView.textStorage appendAttributedString:[[NSAttributedString alloc]initWithString:messageWithNewLine]];
-//                                    
-//                                    if (scroll) // Scroll to end of the textview contents
-//                                    [self.textView scrollRangeToVisible: NSMakeRange(self.textView.string.length, 0)];
+                                    if scroll {
+                                        d.textView?.scrollToEndOfDocument(nil)
+                                    }
+
                                 }
                                 
                                 return
                             } else {
                                 let aa = NSAttributedString(string: b + "\n")
+                                let scroll = (NSMaxY(d.textView!.visibleRect) == NSMaxY(d.textView!.bounds))
                                 d.textView?.textStorage?.append(aa)
+                                if scroll {
+                                    d.textView?.scrollToEndOfDocument(nil)
+                                }
                             }
                         }
 
