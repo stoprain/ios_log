@@ -34,6 +34,8 @@ class Device: NSObject {
 
 class Node: NSObject {
     var name: String = ""
+    var socketAddress: Int32 = 0
+    var messages: [String] = [String]()
 }
 
 @NSApplicationMain
@@ -46,10 +48,11 @@ class AppDelegate: NSObject, NSApplicationDelegate,
     @IBOutlet weak var textView: NSTextView?
     @IBOutlet weak var textField: NSTextField?
     
-    var ios = Device()
-    var mac = Device()
+    static var ios = Device()
+    static var mac = Device()
     var logs = [String]()
     var origin = ""
+    var selectedNode: Node?
 
 //    static var t: NSTextView!
     
@@ -106,7 +109,7 @@ class AppDelegate: NSObject, NSApplicationDelegate,
     }
     
     func reloadLogs() {
-        self.mac.nodes.removeAll()
+        AppDelegate.mac.nodes.removeAll()
         let dpath = documentPath
         let f = FileManager.default
         let e = f.enumerator(atPath: dpath)
@@ -114,7 +117,7 @@ class AppDelegate: NSObject, NSApplicationDelegate,
             if element.hasSuffix(".log") {
                 let n = Node()
                 n.name = element
-                self.mac.nodes.append(n)
+                AppDelegate.mac.nodes.append(n)
             }
         }
         
@@ -125,12 +128,8 @@ class AppDelegate: NSObject, NSApplicationDelegate,
         
         self.checkDocumentPath()
         
-        self.ios.name = "ios"
-        self.mac.name = "mac"
-        
-        let current = Node()
-        current.name = "current"
-        self.ios.nodes.append(current)
+        AppDelegate.ios.name = "ios"
+        AppDelegate.mac.name = "mac"
         
         self.sourceListView?.dataSource = self
         self.sourceListView?.delegate = self
@@ -171,8 +170,116 @@ class AppDelegate: NSObject, NSApplicationDelegate,
 //        
 ////        self.window.contentView?.addSubview(AppDelegate.t!)
 ////        
-//        start { (a) in
+        
+        start({ (address, cchar) in
+            let b = String(cString: cchar!)
+            //print("onmessage for socket \(address)")
+//            if t == 0 {
+//                print("disconnect deivce \(b)")
+//            } else if t == 1 {
+//                print("connect device \(b)")
+//            } else if t == 2 {
+//                
+//            }
+            
+            for a in AppDelegate.ios.nodes {
+                if a.socketAddress == address {
+                    a.messages.append(b)
+
+                    
+                    if let d = NSApplication.shared().delegate as? AppDelegate {
+                        if d.selectedNode == a {
+                            d.logs.append(b)
+                            let s = d.textField?.stringValue.lowercased() ?? ""
+                            if s.characters.count > 0 {
+                                //filter
+                                if let r = b.lowercased().range(of: s) {
+                                    let aa = NSMutableAttributedString(string: b + "\n")
+                                    let start = b.distance(from: b.startIndex, to: r.lowerBound)
+                                    let end = b.distance(from: b.startIndex, to: r.upperBound) - start
+                                    aa.addAttributes([NSForegroundColorAttributeName: NSColor.orange], range: NSMakeRange(start, end))
+                                    
+//                                    let scroll = (NSMaxY(d.textView!.visibleRect) == NSMaxY(d.textView!.bounds))
+                                    d.textView?.textStorage?.append(aa)
+//                                    if scroll {
+//                                        d.textView?.scrollRangeToVisible(NSMakeRange(d.textView!.string!.characters.count, 0))
+//                                    }
+                                    
+                                    
+                                    
+//                                    NSString *messageWithNewLine = [message stringByAppendingString:@"\n"];
+//                                    
+//                                    // Smart Scrolling
+//                                    BOOL scroll = (NSMaxY(self.textView.visibleRect) == NSMaxY(self.textView.bounds));
+//                                    
+//                                    // Append string to textview
+//                                    [self.textView.textStorage appendAttributedString:[[NSAttributedString alloc]initWithString:messageWithNewLine]];
+//                                    
+//                                    if (scroll) // Scroll to end of the textview contents
+//                                    [self.textView scrollRangeToVisible: NSMakeRange(self.textView.string.length, 0)];
+                                }
+                                
+                                return
+                            } else {
+                                let aa = NSAttributedString(string: b + "\n")
+                                d.textView?.textStorage?.append(aa)
+                            }
+                        }
+
+                    }
+                    
+                    return
+                }
+            }
+            
+        }, { (address, cchar) in
+            let b = String(cString: cchar!)
+            //print("connect deivce \(address) \(b)")
+            
+            for a in AppDelegate.ios.nodes {
+                if a.name == b {
+                    // device was added
+                    return
+                }
+            }
+            
+            let node = Node()
+            node.name = b
+            node.socketAddress = address
+            AppDelegate.ios.nodes.append(node)
+            
+            if let d = NSApplication.shared().delegate as? AppDelegate {
+                d.sourceListView?.reloadData()
+            }
+            //create node
+//            self.sourceListView?.reloadData()
+            
+        }) { (cchar) in
+            let b = String(cString: cchar!)
+            //print("disconnect deivce \(b)")
+            
+            for a in AppDelegate.ios.nodes {
+                if a.name == b {
+                    // device was added
+                    if let i = AppDelegate.ios.nodes.index(of: a) {
+                        AppDelegate.ios.nodes.remove(at: i)
+                        if let d = NSApplication.shared().delegate as? AppDelegate {
+                            d.sourceListView?.reloadData()
+                        }
+                    }
+                }
+            }
+        }
+        
+//        start { (t, a) in
 //            let b = String(cString: a!)
+//            if t == 0 {
+//                print("disconnect deivce \(b)")
+//            } else if t == 1 {
+//                print("connect device \(b)")
+//            } else if t == 2 {
+//                print("onmessage")
+//            }
 //            let a = NSAttributedString(string: b)
 //            AppDelegate.t?.textStorage?.append(a)
 //            AppDelegate.t.sizeToFit()
@@ -197,9 +304,9 @@ class AppDelegate: NSObject, NSApplicationDelegate,
         } else {
             switch index {
                 case 0:
-                return self.ios
+                return AppDelegate.ios
                 default:
-                return self.mac
+                return AppDelegate.mac
             }
         }
     }
@@ -250,12 +357,19 @@ class AppDelegate: NSObject, NSApplicationDelegate,
     func outlineViewSelectionDidChange(_ notification: Notification) {
         print(notification)
         if let n = self.sourceListView?.item(atRow: self.sourceListView!.selectedRow) as? Node {
-            let dpath = documentPath.stringByAppendingPathComponent(path: n.name)
-            do {
-                let t = try String(contentsOfFile: dpath)
+            self.selectedNode = n
+            
+            if n.socketAddress > 0 {
+                let t = n.messages.joined(separator: "\n")
                 self.filterLogs(s: t)
-            } catch {
-                
+            } else {
+                let dpath = documentPath.stringByAppendingPathComponent(path: n.name)
+                do {
+                    let t = try String(contentsOfFile: dpath)
+                    self.filterLogs(s: t)
+                } catch {
+                    
+                }
             }
         }
     }

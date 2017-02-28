@@ -3,8 +3,13 @@
 #include <CoreFoundation/CoreFoundation.h>
 #include "MobileDevice.h"
 
-typedef void (*swift_callback)(const char *);
-swift_callback cb;
+typedef void (*swift_callback_message)(const char *, const char *);
+typedef void (*swift_callback_connect)(const char *, const char *);
+typedef void (*swift_callback_disconnect)(const char *);
+
+swift_callback_message sc_message;
+swift_callback_connect sc_connect;
+swift_callback_disconnect sc_disconnect;
 
 typedef struct {
     service_conn_t connection;
@@ -186,7 +191,7 @@ static void SocketCallback(CFSocketRef s, CFSocketCallBackType type, CFDataRef a
         }
         
         if (should_print_message(buffer, extentLength)) {
-            cb(buffer);
+            sc_message((int)s, buffer);
 //            printMessage(1, buffer, extentLength);
 //            printSeparator(1);
         }
@@ -201,13 +206,14 @@ static void DeviceNotificationCallback(am_device_notification_callback_info *inf
     struct am_device *device = info->dev;
     switch (info->msg) {
         case ADNCI_MSG_CONNECTED: {
-            if (debug) {
+            //if (debug) {
                 CFStringRef deviceId = AMDeviceCopyDeviceIdentifier(device);
+                const char *cs = CFStringGetCStringPtr( deviceId, kCFStringEncodingUTF8 ) ;
                 CFStringRef str = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("deviceconsole connected: %@"), deviceId);
                 CFRelease(deviceId);
-                CFShow(str);
+                //CFShow(str);
                 CFRelease(str);
-            }
+            //}
             if (requiredDeviceId) {
                 CFStringRef deviceId = AMDeviceCopyDeviceIdentifier(device);
                 Boolean isRequiredDevice = CFEqual(deviceId, requiredDeviceId);
@@ -224,6 +230,7 @@ static void DeviceNotificationCallback(am_device_notification_callback_info *inf
                             if (socket) {
                                 CFRunLoopSourceRef source = CFSocketCreateRunLoopSource(kCFAllocatorDefault, socket, 0);
                                 if (source) {
+                                    sc_connect((int)socket, cs);
                                     CFRunLoopAddSource(CFRunLoopGetMain(), source, kCFRunLoopCommonModes);
                                     AMDeviceRetain(device);
                                     DeviceConsoleConnection *data = malloc(sizeof *data);
@@ -244,13 +251,15 @@ static void DeviceNotificationCallback(am_device_notification_callback_info *inf
             break;
         }
         case ADNCI_MSG_DISCONNECTED: {
-            if (debug) {
+            //if (debug) {
                 CFStringRef deviceId = AMDeviceCopyDeviceIdentifier(device);
+                const char *cs = CFStringGetCStringPtr( deviceId, kCFStringEncodingUTF8 ) ;
+                sc_disconnect(cs);
                 CFStringRef str = CFStringCreateWithFormat(kCFAllocatorDefault, NULL, CFSTR("deviceconsole disconnected: %@"), deviceId);
                 CFRelease(deviceId);
-                CFShow(str);
+                //CFShow(str);
                 CFRelease(str);
-            }
+            //}
             DeviceConsoleConnection *data = (DeviceConsoleConnection *)CFDictionaryGetValue(liveConnections, device);
             if (data) {
                 CFDictionaryRemoveValue(liveConnections, device);
@@ -342,8 +351,10 @@ static void color_separator(int fd)
 //}
 
 
-void start(swift_callback callback) {
-    cb = callback;
+void start(swift_callback_message c1, swift_callback_connect c2, swift_callback_disconnect c3) {
+    sc_message = c1;
+    sc_connect = c2;
+    sc_disconnect = c3;
     liveConnections = CFDictionaryCreateMutable(kCFAllocatorDefault, 0, NULL, NULL);
     am_device_notification *notification;
     AMDeviceNotificationSubscribe(DeviceNotificationCallback, 0, 0, NULL, &notification);
