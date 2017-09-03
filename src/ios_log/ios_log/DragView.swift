@@ -58,31 +58,56 @@ class DragView: NSScrollView {
             let scriptPath = Bundle.main.path(forResource: "decode_mars_nocrypt_log_file", ofType: "py")
             process.arguments = [scriptPath!, path]
             
-            let p = Pipe()
             process.standardInput = Pipe()
-            process.standardOutput = p
-            process.standardError = p
-            let h = p.fileHandleForReading
-            h.waitForDataInBackgroundAndNotify()
-            
-            
-            NotificationCenter.default.addObserver(forName: NSNotification.Name.NSFileHandleDataAvailable, object: nil, queue: OperationQueue.main, using: { (noti) in
-                let h = noti.object as? FileHandle
-                if let d = h?.availableData {
-                    let s = String(data: d, encoding: String.Encoding.utf8)
-                    Swift.print("pipe output \(s.debugDescription)")
-                }
-            })
-            
+            process.standardOutput = Pipe()
+            process.standardError = Pipe()
+
             process.launch()
             process.waitUntilExit()
             let exitCode = process.terminationStatus
             if exitCode != 0 {
                 Swift.print("process Error!")
             }
+            
+//            self.cat(path: path)
         }
         
         NotificationCenter.default.post(name: NSNotification.Name(rawValue: "reload"), object: nil)
+    }
+    
+    private func cat(path: String) {
+        
+        let process = Process()
+        process.launchPath = "/bin/cat"
+//        let scriptPath = Bundle.main.path(forResource: "decode_mars_nocrypt_log_file", ofType: "py")
+        process.arguments = [path]
+        
+        let p = Pipe()
+        process.standardInput = Pipe()
+        process.standardOutput = p
+        process.standardError = Pipe()
+        let h = p.fileHandleForReading
+//        h.waitForDataInBackgroundAndNotify()
+//        NotificationCenter.default.addObserver(forName: NSNotification.Name.NSFileHandleDataAvailable, object: nil, queue: OperationQueue.main, using: { (noti) in
+//            let h = noti.object as? FileHandle
+//            if let d = h?.availableData {
+//                let s = String(data: d, encoding: String.Encoding.utf8)
+//                Swift.print("pipe output \(s.debugDescription)")
+//            }
+//            if let c = h?.readDataToEndOfFile() {
+//                let s = String(data: c, encoding: String.Encoding.utf8)
+//                Swift.print("pipe output \(s.debugDescription)")
+//            }
+//        })
+        
+        process.launch()
+        let s = String(data: h.readDataToEndOfFile(), encoding: String.Encoding.utf8)
+        Swift.print("pipe output \(s.debugDescription)")
+        process.waitUntilExit()
+        let exitCode = process.terminationStatus
+        if exitCode != 0 {
+            Swift.print("process Error!")
+        }
     }
     
 }

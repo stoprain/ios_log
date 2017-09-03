@@ -357,13 +357,24 @@ class AppDelegate: NSObject, NSApplicationDelegate,
             } else {
                 let dpath = documentPath.stringByAppendingPathComponent(path: n.name)
                 do {
-                    let url = URL(fileURLWithPath: dpath)
+                    var result = ""
+                    if let reader = LineReader(path: dpath) {
+                        for line in reader {
+                            result += line
+                        }
+                    }
+                    self.filterLogs(s: result)
+//                    let url = URL(fileURLWithPath: dpath)
 //                    let data = try Data(contentsOf: url)
-//                    if let t = String(data: data, encoding: String.Encoding.utf8) {
-//                        self.filterLogs(s: t)
+//                    if let t = String(data: data, encoding: String.Encoding.ascii) {
+//                        let tt = String(utf8String: t.cString(using: String.Encoding.nonLossyASCII)!)
+////                        Swift.print("\(tt)")
+//                        self.filterLogs(s: tt!)
 //                    }
-                    let t = try String(contentsOf: url, encoding: String.Encoding.ascii)
-                    self.filterLogs(s: t)
+////                    let t = try NSString(contentsOfFile: dpath, encoding: String.Encoding.utf8.rawValue)
+////                    let t = try String(contentsOf: url, encoding: String.Encoding.ascii)
+////                    self.filterLogs(s: t as String)
+//                    Swift.print("documentPath data \(data.count)")
                 } catch (let e) {
                     Swift.print("documentPath error \(e)")
                 }
@@ -377,5 +388,39 @@ class AppDelegate: NSObject, NSApplicationDelegate,
         self.doFilter()
     }
 
+}
+
+class LineReader {
+    let path: String
+    
+    fileprivate let file: UnsafeMutablePointer<FILE>!
+    
+    init?(path: String) {
+        self.path = path
+        
+        file = fopen(path, "r")
+        
+        guard file != nil else { return nil }
+        
+    }
+    
+    var nextLine: String? {
+        var line:UnsafeMutablePointer<CChar>? = nil
+        var linecap:Int = 0
+        defer { free(line) }
+        return getline(&line, &linecap, file) > 0 ? String(cString: line!) : nil
+    }
+    
+    deinit {
+        fclose(file)
+    }
+}
+
+extension LineReader: Sequence {
+    func  makeIterator() -> AnyIterator<String> {
+        return AnyIterator<String> {
+            return self.nextLine
+        }
+    }
 }
 
