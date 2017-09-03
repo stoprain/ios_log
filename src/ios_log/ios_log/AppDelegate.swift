@@ -357,10 +357,15 @@ class AppDelegate: NSObject, NSApplicationDelegate,
             } else {
                 let dpath = documentPath.stringByAppendingPathComponent(path: n.name)
                 do {
-                    let t = try String(contentsOfFile: dpath)
+                    let url = URL(fileURLWithPath: dpath)
+//                    let data = try Data(contentsOf: url)
+//                    if let t = String(data: data, encoding: String.Encoding.utf8) {
+//                        self.filterLogs(s: t)
+//                    }
+                    let t = try String(contentsOf: url, encoding: String.Encoding.ascii)
                     self.filterLogs(s: t)
-                } catch {
-                    
+                } catch (let e) {
+                    Swift.print("documentPath error \(e)")
                 }
             }
         }

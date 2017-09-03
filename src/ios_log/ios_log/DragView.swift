@@ -55,12 +55,24 @@ class DragView: NSScrollView {
         if path.pathExtension == "xlog" {
             let process = Process()
             process.launchPath = "/usr/bin/python"
-            let scriptPath = Bundle.main.path(forResource: "decode_mars_log_file", ofType: "py")
+            let scriptPath = Bundle.main.path(forResource: "decode_mars_nocrypt_log_file", ofType: "py")
             process.arguments = [scriptPath!, path]
             
+            let p = Pipe()
             process.standardInput = Pipe()
-            process.standardOutput = Pipe()
-            process.standardError = Pipe()
+            process.standardOutput = p
+            process.standardError = p
+            let h = p.fileHandleForReading
+            h.waitForDataInBackgroundAndNotify()
+            
+            
+            NotificationCenter.default.addObserver(forName: NSNotification.Name.NSFileHandleDataAvailable, object: nil, queue: OperationQueue.main, using: { (noti) in
+                let h = noti.object as? FileHandle
+                if let d = h?.availableData {
+                    let s = String(data: d, encoding: String.Encoding.utf8)
+                    Swift.print("pipe output \(s.debugDescription)")
+                }
+            })
             
             process.launch()
             process.waitUntilExit()

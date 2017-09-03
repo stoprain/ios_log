@@ -17,6 +17,7 @@
 		B4A7379C1E56FA960079FA93 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4A7379A1E56FA960079FA93 /* MainMenu.xib */; };
 		B4A737A71E56FBF40079FA93 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B4A737A41E56FBF40079FA93 /* main.c */; };
 		B4A737A81E56FBF40079FA93 /* MobileDevice.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4A737A51E56FBF40079FA93 /* MobileDevice.framework */; };
+		B4D87EC71F59495F001C9B13 /* decode_mars_nocrypt_log_file.py in Resources */ = {isa = PBXBuildFile; fileRef = B4D87EC61F59495F001C9B13 /* decode_mars_nocrypt_log_file.py */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		B4A737A41E56FBF40079FA93 /* main.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		B4A737A51E56FBF40079FA93 /* MobileDevice.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileDevice.framework; path = ../../../../../../../../System/Library/PrivateFrameworks/MobileDevice.framework; sourceTree = "<group>"; };
 		B4A737A61E56FBF40079FA93 /* MobileDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileDevice.h; sourceTree = "<group>"; };
+		B4D87EC61F59495F001C9B13 /* decode_mars_nocrypt_log_file.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = decode_mars_nocrypt_log_file.py; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 		B4A737951E56FA960079FA93 /* ios_log */ = {
 			isa = PBXGroup;
 			children = (
+				B4D87EC61F59495F001C9B13 /* decode_mars_nocrypt_log_file.py */,
 				B49049BD1E601DC100E7BE01 /* LineNumberRulerView.swift */,
 				B46FE1601E5D95C900DB341F /* decode_mars_log_file.py */,
 				B4A737A41E56FBF40079FA93 /* main.c */,
@@ -171,6 +174,7 @@
 			files = (
 				B4A737991E56FA960079FA93 /* Assets.xcassets in Resources */,
 				B4A7379C1E56FA960079FA93 /* MainMenu.xib in Resources */,
+				B4D87EC71F59495F001C9B13 /* decode_mars_nocrypt_log_file.py in Resources */,
 				B46FE1611E5D95C900DB341F /* decode_mars_log_file.py in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -357,8 +361,9 @@
 				);
 				INFOPLIST_FILE = ios_log/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "net.stoprain.ios-log";
+				PRODUCT_BUNDLE_IDENTIFIER = com.yunio.ioslog;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ios_log/ios_log-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -380,8 +385,9 @@
 				);
 				INFOPLIST_FILE = ios_log/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = "net.stoprain.ios-log";
+				PRODUCT_BUNDLE_IDENTIFIER = com.yunio.ioslog;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "ios_log/ios_log-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
