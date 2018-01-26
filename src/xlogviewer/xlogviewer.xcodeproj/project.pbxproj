@@ -7,102 +7,111 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		90A61164F79AE76CC1802224 /* Pods_xlogviewer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E39BDD4DE5E8A6F0EA658B5 /* Pods_xlogviewer.framework */; };
-		B47635F52018997300EC5141 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47635F42018997300EC5141 /* AppDelegate.swift */; };
-		B47635F72018997300EC5141 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47635F62018997300EC5141 /* ViewController.swift */; };
-		B47635F92018997300EC5141 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B47635F82018997300EC5141 /* Assets.xcassets */; };
-		B47635FC2018997300EC5141 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B47635FA2018997300EC5141 /* Main.storyboard */; };
-		B4763605201899FD00EC5141 /* FileListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4763604201899FD00EC5141 /* FileListView.swift */; };
+		B47636132019966E00EC5141 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47636122019966E00EC5141 /* AppDelegate.swift */; };
+		B47636152019966E00EC5141 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47636142019966E00EC5141 /* ViewController.swift */; };
+		B47636172019966E00EC5141 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B47636162019966E00EC5141 /* Assets.xcassets */; };
+		B476361A2019966E00EC5141 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B47636182019966E00EC5141 /* Main.storyboard */; };
+		B4763623201996A200EC5141 /* FileListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4763622201996A200EC5141 /* FileListView.swift */; };
+		B47636272019B38D00EC5141 /* PasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47636262019B38D00EC5141 /* PasswordView.swift */; };
+		B476362D2019D36300EC5141 /* LogDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = B476362B2019D36300EC5141 /* LogDecoder.swift */; };
+		B476362E2019D36300EC5141 /* DataCompression.swift in Sources */ = {isa = PBXBuildFile; fileRef = B476362C2019D36300EC5141 /* DataCompression.swift */; };
+		C88CB213F74E2F114E4C650B /* Pods_xlogviewer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 376A3E47E53C516F8827AE67 /* Pods_xlogviewer.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		17393CECD2D2B2AEC6EF3F7E /* Pods-xlogviewer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-xlogviewer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-xlogviewer/Pods-xlogviewer.debug.xcconfig"; sourceTree = "<group>"; };
-		3E39BDD4DE5E8A6F0EA658B5 /* Pods_xlogviewer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_xlogviewer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		56825E286DEE858B351E05CE /* Pods-xlogviewer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-xlogviewer.release.xcconfig"; path = "Pods/Target Support Files/Pods-xlogviewer/Pods-xlogviewer.release.xcconfig"; sourceTree = "<group>"; };
-		B47635F12018997300EC5141 /* xlogviewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = xlogviewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		B47635F42018997300EC5141 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B47635F62018997300EC5141 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		B47635F82018997300EC5141 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		B47635FB2018997300EC5141 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		B47635FD2018997300EC5141 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B47635FE2018997300EC5141 /* xlogviewer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = xlogviewer.entitlements; sourceTree = "<group>"; };
-		B4763604201899FD00EC5141 /* FileListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileListView.swift; sourceTree = "<group>"; };
+		376A3E47E53C516F8827AE67 /* Pods_xlogviewer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_xlogviewer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A019B5F95BBED0E29CC5F66F /* Pods-xlogviewer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-xlogviewer.release.xcconfig"; path = "Pods/Target Support Files/Pods-xlogviewer/Pods-xlogviewer.release.xcconfig"; sourceTree = "<group>"; };
+		B476360F2019966E00EC5141 /* xlogviewer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = xlogviewer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B47636122019966E00EC5141 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		B47636142019966E00EC5141 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B47636162019966E00EC5141 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B47636192019966E00EC5141 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		B476361B2019966E00EC5141 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B476361C2019966E00EC5141 /* xlogviewer.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = xlogviewer.entitlements; sourceTree = "<group>"; };
+		B4763622201996A200EC5141 /* FileListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileListView.swift; sourceTree = "<group>"; };
+		B47636262019B38D00EC5141 /* PasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordView.swift; sourceTree = "<group>"; };
+		B476362B2019D36300EC5141 /* LogDecoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogDecoder.swift; sourceTree = "<group>"; };
+		B476362C2019D36300EC5141 /* DataCompression.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataCompression.swift; sourceTree = "<group>"; };
+		B8DAEE5B5D46240C78EF1482 /* Pods-xlogviewer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-xlogviewer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-xlogviewer/Pods-xlogviewer.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		B47635EE2018997300EC5141 /* Frameworks */ = {
+		B476360C2019966E00EC5141 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				90A61164F79AE76CC1802224 /* Pods_xlogviewer.framework in Frameworks */,
+				C88CB213F74E2F114E4C650B /* Pods_xlogviewer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		25CF7304DCC321DDB3CF7C6F /* Pods */ = {
+		9E32FFD788A15D04BEAC9B01 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				17393CECD2D2B2AEC6EF3F7E /* Pods-xlogviewer.debug.xcconfig */,
-				56825E286DEE858B351E05CE /* Pods-xlogviewer.release.xcconfig */,
+				376A3E47E53C516F8827AE67 /* Pods_xlogviewer.framework */,
 			);
-			name = Pods;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		B47635E82018997300EC5141 = {
+		B47636062019966E00EC5141 = {
 			isa = PBXGroup;
 			children = (
-				B47635F32018997300EC5141 /* xlogviewer */,
-				B47635F22018997300EC5141 /* Products */,
-				25CF7304DCC321DDB3CF7C6F /* Pods */,
-				CD78870231C83879171DA23C /* Frameworks */,
+				B47636112019966E00EC5141 /* xlogviewer */,
+				B47636102019966E00EC5141 /* Products */,
+				B968FFC8E41FAD11841EF5C8 /* Pods */,
+				9E32FFD788A15D04BEAC9B01 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
-		B47635F22018997300EC5141 /* Products */ = {
+		B47636102019966E00EC5141 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B47635F12018997300EC5141 /* xlogviewer.app */,
+				B476360F2019966E00EC5141 /* xlogviewer.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B47635F32018997300EC5141 /* xlogviewer */ = {
+		B47636112019966E00EC5141 /* xlogviewer */ = {
 			isa = PBXGroup;
 			children = (
-				B47635F42018997300EC5141 /* AppDelegate.swift */,
-				B47635F62018997300EC5141 /* ViewController.swift */,
-				B47635F82018997300EC5141 /* Assets.xcassets */,
-				B47635FA2018997300EC5141 /* Main.storyboard */,
-				B47635FD2018997300EC5141 /* Info.plist */,
-				B47635FE2018997300EC5141 /* xlogviewer.entitlements */,
-				B4763604201899FD00EC5141 /* FileListView.swift */,
+				B476362C2019D36300EC5141 /* DataCompression.swift */,
+				B476362B2019D36300EC5141 /* LogDecoder.swift */,
+				B4763622201996A200EC5141 /* FileListView.swift */,
+				B47636122019966E00EC5141 /* AppDelegate.swift */,
+				B47636142019966E00EC5141 /* ViewController.swift */,
+				B47636162019966E00EC5141 /* Assets.xcassets */,
+				B47636182019966E00EC5141 /* Main.storyboard */,
+				B476361B2019966E00EC5141 /* Info.plist */,
+				B476361C2019966E00EC5141 /* xlogviewer.entitlements */,
+				B47636262019B38D00EC5141 /* PasswordView.swift */,
 			);
 			path = xlogviewer;
 			sourceTree = "<group>";
 		};
-		CD78870231C83879171DA23C /* Frameworks */ = {
+		B968FFC8E41FAD11841EF5C8 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3E39BDD4DE5E8A6F0EA658B5 /* Pods_xlogviewer.framework */,
+				B8DAEE5B5D46240C78EF1482 /* Pods-xlogviewer.debug.xcconfig */,
+				A019B5F95BBED0E29CC5F66F /* Pods-xlogviewer.release.xcconfig */,
 			);
-			name = Frameworks;
+			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		B47635F02018997300EC5141 /* xlogviewer */ = {
+		B476360E2019966E00EC5141 /* xlogviewer */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = B47636012018997300EC5141 /* Build configuration list for PBXNativeTarget "xlogviewer" */;
+			buildConfigurationList = B476361F2019966E00EC5141 /* Build configuration list for PBXNativeTarget "xlogviewer" */;
 			buildPhases = (
-				61D5CA4355BCD278A2A5598B /* [CP] Check Pods Manifest.lock */,
-				B47635ED2018997300EC5141 /* Sources */,
-				B47635EE2018997300EC5141 /* Frameworks */,
-				B47635EF2018997300EC5141 /* Resources */,
-				1A78A98D2E225E686BA65C6A /* [CP] Embed Pods Frameworks */,
-				D6EAE76AF6E842C698CCB9C1 /* [CP] Copy Pods Resources */,
+				978CB239E4BB38CD62ED5538 /* [CP] Check Pods Manifest.lock */,
+				B476360B2019966E00EC5141 /* Sources */,
+				B476360C2019966E00EC5141 /* Frameworks */,
+				B476360D2019966E00EC5141 /* Resources */,
+				8819B19B7C429089DF138FC5 /* [CP] Embed Pods Frameworks */,
+				5515D6EE2F9B67F4A9B03D68 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -110,26 +119,26 @@
 			);
 			name = xlogviewer;
 			productName = xlogviewer;
-			productReference = B47635F12018997300EC5141 /* xlogviewer.app */;
+			productReference = B476360F2019966E00EC5141 /* xlogviewer.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		B47635E92018997300EC5141 /* Project object */ = {
+		B47636072019966E00EC5141 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
 				LastUpgradeCheck = 0920;
 				ORGANIZATIONNAME = com.yunio;
 				TargetAttributes = {
-					B47635F02018997300EC5141 = {
+					B476360E2019966E00EC5141 = {
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
 					};
 				};
 			};
-			buildConfigurationList = B47635EC2018997300EC5141 /* Build configuration list for PBXProject "xlogviewer" */;
+			buildConfigurationList = B476360A2019966E00EC5141 /* Build configuration list for PBXProject "xlogviewer" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -137,30 +146,45 @@
 				en,
 				Base,
 			);
-			mainGroup = B47635E82018997300EC5141;
-			productRefGroup = B47635F22018997300EC5141 /* Products */;
+			mainGroup = B47636062019966E00EC5141;
+			productRefGroup = B47636102019966E00EC5141 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				B47635F02018997300EC5141 /* xlogviewer */,
+				B476360E2019966E00EC5141 /* xlogviewer */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		B47635EF2018997300EC5141 /* Resources */ = {
+		B476360D2019966E00EC5141 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B47635F92018997300EC5141 /* Assets.xcassets in Resources */,
-				B47635FC2018997300EC5141 /* Main.storyboard in Resources */,
+				B47636172019966E00EC5141 /* Assets.xcassets in Resources */,
+				B476361A2019966E00EC5141 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		1A78A98D2E225E686BA65C6A /* [CP] Embed Pods Frameworks */ = {
+		5515D6EE2F9B67F4A9B03D68 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-xlogviewer/Pods-xlogviewer-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8819B19B7C429089DF138FC5 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -168,17 +192,23 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-xlogviewer/Pods-xlogviewer-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftHEXColors/SwiftHEXColors.framework",
+				"${BUILT_PRODUCTS_DIR}/ZipArchive/ZipArchive.framework",
+				"${BUILT_PRODUCTS_DIR}/libCommonCrypto/CommonCrypto.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftHEXColors.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZipArchive.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CommonCrypto.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-xlogviewer/Pods-xlogviewer-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		61D5CA4355BCD278A2A5598B /* [CP] Check Pods Manifest.lock */ = {
+		978CB239E4BB38CD62ED5538 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -196,41 +226,29 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		D6EAE76AF6E842C698CCB9C1 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-xlogviewer/Pods-xlogviewer-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		B47635ED2018997300EC5141 /* Sources */ = {
+		B476360B2019966E00EC5141 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B47635F72018997300EC5141 /* ViewController.swift in Sources */,
-				B47635F52018997300EC5141 /* AppDelegate.swift in Sources */,
-				B4763605201899FD00EC5141 /* FileListView.swift in Sources */,
+				B47636152019966E00EC5141 /* ViewController.swift in Sources */,
+				B47636132019966E00EC5141 /* AppDelegate.swift in Sources */,
+				B476362D2019D36300EC5141 /* LogDecoder.swift in Sources */,
+				B4763623201996A200EC5141 /* FileListView.swift in Sources */,
+				B476362E2019D36300EC5141 /* DataCompression.swift in Sources */,
+				B47636272019B38D00EC5141 /* PasswordView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		B47635FA2018997300EC5141 /* Main.storyboard */ = {
+		B47636182019966E00EC5141 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				B47635FB2018997300EC5141 /* Base */,
+				B47636192019966E00EC5141 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -238,7 +256,7 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		B47635FF2018997300EC5141 /* Debug */ = {
+		B476361D2019966E00EC5141 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -295,7 +313,7 @@
 			};
 			name = Debug;
 		};
-		B47636002018997300EC5141 /* Release */ = {
+		B476361E2019966E00EC5141 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -344,9 +362,9 @@
 			};
 			name = Release;
 		};
-		B47636022018997300EC5141 /* Debug */ = {
+		B47636202019966E00EC5141 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 17393CECD2D2B2AEC6EF3F7E /* Pods-xlogviewer.debug.xcconfig */;
+			baseConfigurationReference = B8DAEE5B5D46240C78EF1482 /* Pods-xlogviewer.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = xlogviewer/xlogviewer.entitlements;
@@ -360,9 +378,9 @@
 			};
 			name = Debug;
 		};
-		B47636032018997300EC5141 /* Release */ = {
+		B47636212019966E00EC5141 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 56825E286DEE858B351E05CE /* Pods-xlogviewer.release.xcconfig */;
+			baseConfigurationReference = A019B5F95BBED0E29CC5F66F /* Pods-xlogviewer.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = xlogviewer/xlogviewer.entitlements;
@@ -379,25 +397,25 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		B47635EC2018997300EC5141 /* Build configuration list for PBXProject "xlogviewer" */ = {
+		B476360A2019966E00EC5141 /* Build configuration list for PBXProject "xlogviewer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B47635FF2018997300EC5141 /* Debug */,
-				B47636002018997300EC5141 /* Release */,
+				B476361D2019966E00EC5141 /* Debug */,
+				B476361E2019966E00EC5141 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B47636012018997300EC5141 /* Build configuration list for PBXNativeTarget "xlogviewer" */ = {
+		B476361F2019966E00EC5141 /* Build configuration list for PBXNativeTarget "xlogviewer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				B47636022018997300EC5141 /* Debug */,
-				B47636032018997300EC5141 /* Release */,
+				B47636202019966E00EC5141 /* Debug */,
+				B47636212019966E00EC5141 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = B47635E92018997300EC5141 /* Project object */;
+	rootObject = B47636072019966E00EC5141 /* Project object */;
 }

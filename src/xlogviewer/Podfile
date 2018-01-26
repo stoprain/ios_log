@@ -3,4 +3,7 @@ use_frameworks!
 
 target 'xlogviewer' do
     pod 'SnapKit'
+    pod 'ZipArchive'
+    pod 'SwiftHEXColors'
+    pod 'libCommonCrypto'
 end
